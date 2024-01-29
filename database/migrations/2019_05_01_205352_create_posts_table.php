@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEventsTable extends Migration
+class CreatePostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,15 @@ class CreateEventsTable extends Migration
      */
     public function up()
     {
-        Schema::create('events', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('owner_id');
             $table->string('name')->nullable();
-            $table->boolean('active')->default(true);
-            $table->boolean('private')->default(false);
             $table->text('description')->nullable();
             $table->string('url')->nullable();
             $table->date('start_date');
             $table->date('end_date')->nullable();
-            $table->enum('type', ['event', 'program'])->nullable();
+            $table->enum('type', ['post', 'other'])->nullable();
             $table->integer('cost');
             
             $table->timestamps();
