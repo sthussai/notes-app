@@ -69,9 +69,11 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-            if ($request->type=='event'){
-                $request->tags = str_replace(' ', '', $request->tags);
+        if($request->tags) {
+            $request->tags = str_replace(' ', '', $request->tags);
             $tags = explode(',', $request->tags);
+        }
+
             $event = new Event();
 
             $event->owner_id = auth()->id();
@@ -82,8 +84,7 @@ class EventController extends Controller
             $event->cost ? $event->cost = request()->cost : $event->cost = 20;
             $event->start_date ? $event->start_date = request()->start_date : $event->start_date = Carbon::now(); 
             $event->save(); 
-            $event->syncTags($tags);
-        }
+            if($request->tags) {$event->syncTags($tags);}
 
 
         return redirect('/events');
@@ -113,10 +114,12 @@ class EventController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->tags = str_replace(' ', '', $request->tags);
-        $tags = explode(',', $request->tags);
+        if($request->tags) {
+            $request->tags = str_replace(' ', '', $request->tags);
+            $tags = explode(',', $request->tags);
+            }
         $event = Event::find($id);
-        $event->syncTags($tags);
+        if($request->tags) {$event->syncTags($tags);}
         $event->name = request()->name;
         $event->description = request()->description;
         $event->url ? $event->url = request()->url : $event->url = ""; 

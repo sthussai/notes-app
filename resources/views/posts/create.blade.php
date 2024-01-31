@@ -21,7 +21,8 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
 
-  <form action="/posts" method='POST' class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
+  <form action="/posts" method='POST' enctype="multipart/form-data"
+  class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
     {{ csrf_field() }}
 
     <h2 class="w3-center"> Create New Post</h2>
@@ -57,6 +58,11 @@
         <input class="w3-input w3-border" name="url" type="text" placeholder="Post URl">
       </div>
     </div>
+
+    <div class="w3-row w3-section">
+        <input type="file" id="image" name="image" />
+        <br>
+      </div>
 
 
     <label>Seperate tags by comma:

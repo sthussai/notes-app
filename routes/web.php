@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,7 @@ Route::get('/tags/{tag}', [TagController::class, 'index']);
 
 Route::resource('events', EventController::class);
 Route::resource('posts', PostController::class);
+Route::resource('media', MediaController::class);
 Route::get('showall', [PostController::class, 'showall']);
 
 Route::get('/dashboard', function () {

@@ -1,51 +1,50 @@
-@extends("posts.layout")
+@extends('posts.layout')
+@section('header')
+<h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+    {{ __('Media Upload') }}
+</h2>
+@endsection
+<!-- page -->
 
+@section('content' )
 
-
-@section('content1')
-
-
-
-
-<div class="flex flex-col justify-center  text-center ">
-  <h1 class="text-4xl text">Med Posts</h1>
-
-
-  @foreach ($posts as $post)
-
-  <!-- Start Event Listing 1 -->
-  <div class=" hover:bg-slate-100">
-    @auth
-    @if (Auth::user()->can('update', $post))
-    <!-- The current user can update the post... -->
-    <a href="/posts/{{$post->id}}/edit" class="w3-button bg-green-300 float-right">Edit</a>
+<!-- main content page -->
+<div class="w-full p-12 m-8 bg-white text-gray-900  overflow-hidden shadow-sm sm:rounded-lg">
+    <p class='text-3x1'>
+    All Posts Media 
+    </p>
+    @if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
     @endif
-    @endauth
-    <a href="/posts/{{str_replace(' ', '_',$post->name)}}" class='w3-row-padding  w3-content w3-large ' style="">
-      <div class='w3-mobile w3-col  s12 flex justify-center' style="">
-        <img class='w3-image' src="{{$post->url}}" style="max-height:250px;">
-      </div>
-      <div class='w3-mobile w3-col s12 my-4'>
-        <h3 class="text-3xl"><b>{{$post->name}}</b>
-        </h3>
-        <h2 class="text-m font-light ">Post ID: {{$post->id}}</h2>
-        <h2 class="text-m font-light ">Post Owner ID: {{$post->owner_id}}</h2>
-        <h2 class="text-m font-light ">Current User ID: {{auth()->user() ? auth()->user()->id :
-          "Not logged in" }}</h2>
-        <p class="w3-text-grey">{{$post->description}}</p>
+
+    @if (session('success'))
+    <div class="alert alert-success" role="alert">
+        {{ session('success') }}
+    </div>
+    @endif
+
+
+
+    <form action="{{ route('media.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <input type="text" id="id" name="id" placeholder="Enter Post ID for Image" />
+        <input type="file" id="image" name="image" />
         <br>
+        <x-primary-button type="submit">Upload</x-primary-button>
+    </form>
 
-        <hr>
-        <p class="my-4">Tags</p>
-        @foreach($post->tags as $tag)
-        <a href="/tags/{{$tag->slug}}"
-          class="border-4 border-indigo-300 w3-round w3-padding bg-indigo-200">{{$tag->name}}</a>
-        @endforeach
 
-        <p class='w3-small w3-text-grey my-4'>Created or Updated {{$post->updated_at->diffForHumans()}}</p>
-      </div>
-    </a>
 
+    @foreach($posts as $post)
+    
+    
+    
     <div class="bg-white py-4 sm:py-6">
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <ul role="list"
@@ -74,6 +73,13 @@
                       <h1 class="text-lg font-bold text-white">{{$post->name}}</h1>
                     </div>
                   </div>
+                  <form action="{{ route('media.destroy', $media->id) }}" method="POST" enctype="multipart/form-data">
+        <input type="text" name="id" value="{{ $media->id }}" hidden>
+        @csrf
+        @method('DELETE')
+        <x-primary-button type="submit" class="w3-red ">Delete</x-primary-button>
+
+    </form> 
                 </div>
               </div>
             </ul>
@@ -83,17 +89,20 @@
         </ul>
       </div>
     </div>
+    
+   
+
+    
+    <hr>
+
+    
+    
+    @endforeach
 
 
 
-  </div>
-  <!-- END Event Listing 1 -->
-
-  <hr>
-
-
-  @endforeach
 
 </div>
+
 
 @endsection

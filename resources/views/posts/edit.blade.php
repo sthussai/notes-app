@@ -6,15 +6,16 @@
 
 <div class="w3-center    w3-panel w3-card">
 
+@if (Auth::user() && Auth::user()->can('update', $post)) 
 
-  <!-- @if (session('status'))
+@if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
-                    @endif -->
+                    @endif 
 
   <div>
-    <form action="/posts/{{ $post->id }}" method="POST"
+    <form action="/posts/{{ $post->id }}" method="POST" enctype="multipart/form-data"
       class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
 
       {{ method_field('PATCH') }}
@@ -67,6 +68,12 @@
       </div>
 
       <div class="w3-row w3-section">
+        <input type="file" id="image" name="image" />
+        <br>
+      </div>
+    
+
+      <div class="w3-row w3-section">
         <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-info"></i></div>
         <div class="w3-rest">
           Seperate tags by comma
@@ -99,7 +106,12 @@
 
 
 </div>
+@else
+<div class="w3-row w3-section">
+        <p>Unable to edit this as it's not your resource</p>
+      </div>
 
+@endif
 
 </div>
 @endsection

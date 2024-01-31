@@ -83,7 +83,9 @@ class PostController extends Controller
                 $tags = explode(',', $request->tags);
             }
             $post = new Post();
-
+            if($request->hasFile('image') ){
+                $post->addMedia($request->file('image'))->toMediaCollection('images');
+            }
             $post->owner_id = auth()->id();
             $post->type = request()->type;
             $post->name = request()->name;
@@ -123,11 +125,16 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
+        $post = Post::find($id);
+        if($request->hasFile('image') ){
+            $post->addMedia($request->file('image'))->toMediaCollection('images');
+        }
         if($request->tags) {
         $request->tags = str_replace(' ', '', $request->tags);
         $tags = explode(',', $request->tags);
         }
-        $post = Post::find($id);
+
         if($request->tags) {$post->syncTags($tags);}
         $post->name = request()->name;
         $post->type = request()->type;

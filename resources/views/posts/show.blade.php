@@ -4,14 +4,18 @@
 
 @section('content1')
 
-
 <div class="w3-center    w3-panel w3-card">
+  
 
 
   <div class='w3-content'>
 
-    <h1 class='w3-large'>{{ $post->name }}
+    <h1 class='text-3x1'>{{ $post->name }}
     </h1>
+            <h2 class="text-m font-light ">Post ID: {{$post->id}}</h2>
+        <h2 class="text-m font-light ">Post Owner ID: {{$post->owner_id}}</h2>
+        <h2 class="text-m font-light ">Current User ID: {{auth()->user() ? auth()->user()->id :
+          "Not logged in" }}</h2>
 
     <div class="w3-row w3-section">
       <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
@@ -49,7 +53,12 @@
     </div>
 
     <a href="/posts/{{str_replace(' ', '_', $previousPost)}}" class="w3-button    w3-blue-grey">Previous</a>
+    @auth
+    @if (Auth::user()->can('update', $post))
+    <!-- The current user can update the post... -->
     <a href="/posts/{{$post->id}}/edit" class="w3-button w3-green ">Edit</a>
+    @endif
+    @endauth
     <a href="/posts/{{str_replace(' ', '_', $nextPost)}}" class="w3-button w3-blue-grey">Next</a>
     <div class='w3-margin-top'><a href="/posts" class="w3-button w3-light-grey">Home</a></div>
   </div>

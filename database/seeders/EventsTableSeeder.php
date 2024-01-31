@@ -14,8 +14,12 @@ class EventsTableSeeder extends Seeder
     {
         //
         Event::create([
-            'name' => 'Camping in Camrose',
-            'description' => 'Join us for an epic camping experience.',
+            'name' => 'Creating symbolic link between public and public_html',
+            'description' => 'Run below command in root directory (ie. dir containing notes-app and public_html)
+           ln -s notes-app/public public_html
+           
+           git add remote <remote-name (can be anything)> <remote url>
+           then git pull ',
             'type' => 'event',
             'cost' => '50',
             'owner_id' => '1',

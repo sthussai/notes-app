@@ -26,6 +26,11 @@
                         {{ __('Events') }}
                     </x-nav-link>
                 </div>
+                <div class="space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('media.index')" :active="request()->routeIs('media.index')">
+                        {{ __('Media') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

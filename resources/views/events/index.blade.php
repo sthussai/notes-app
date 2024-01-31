@@ -8,14 +8,22 @@
 
 
 <div class="flex flex-col justify-center  text-center ">
-  <h1 class="text-4xl text">All Posts</h1>
+  <h1 class="text-4xl text">All Events</h1>
 
 
   @foreach ($events as $event)
 
   <!-- Start Event Listing 1 -->
   <div class=" hover:bg-slate-100">
+  @auth
+    @if (Auth::user()->can('update', $event))
+    <!-- The current user can update the event... -->
     <a href="/events/{{$event->id}}/edit" class="w3-button bg-green-300 float-right">Edit</a>
+    @else
+    <button class="w3-button bg-gray-300 float-right disabled" >Unable to Edit</button>
+    @endif
+    @endauth
+
     <a href="/events/{{str_replace(' ', '_',$event->name)}}" class='w3-row-padding  w3-content w3-large ' style="">
       <div class='w3-mobile w3-col  s12 flex justify-center' style="">
         <img class='w3-image' src="{{$event->url}}" style="max-height:250px;">
@@ -45,5 +53,6 @@
   @endforeach
 
 </div>
+
 
 @endsection

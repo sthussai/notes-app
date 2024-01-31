@@ -1,4 +1,4 @@
-@extends("events.layout")
+@extends("posts.layout")
 
 
 
@@ -11,27 +11,27 @@
   <h1 class="text-4xl text">All Posts by Tag: {{$tag}}</h1>
 
 
-  @foreach ($eventsByTag as $event)
+  @foreach ($postsByTag as $post)
 
   <!-- Start Event Listing 1 -->
   <div class=" hover:bg-slate-100">
-    <a href="/events/{{$event->id}}/edit" class="w3-button bg-green-300 float-right">Edit</a>
-    <a href="/events/{{str_replace(' ', '_',$event->name)}}" class='w3-row-padding  w3-content w3-large ' style="">
+    <a href="/posts/{{$post->id}}/edit" class="w3-button bg-green-300 float-right">Edit</a>
+    <a href="/posts/{{str_replace(' ', '_',$post->name)}}" class='w3-row-padding  w3-content w3-large ' style="">
       <div class='w3-mobile w3-col  s12 flex justify-center' style="">
-        <img class='w3-image' src="{{$event->url}}" style="max-height:250px;">
+        <img class='w3-image' src="{{$post->url}}" style="max-height:250px;">
       </div>
       <div class='w3-mobile w3-col s12 my-4'>
-        <h3 class="text-3xl"><b>{{$event->name}}</b>
+        <h3 class="text-3xl"><b>{{$post->name}}</b>
         </h3>
-        <p class="w3-text-grey">{{$event->description}}</p>
+        <p class="w3-text-grey">{{$post->description}}</p>
 
         <p class="my-4">Tags</p>
-        @foreach($event->tags as $tag)
+        @foreach($post->tags as $tag)
         <a href="/tags/{{$tag->slug}}"
           class="border-4 border-indigo-300 w3-round w3-padding bg-indigo-200">{{$tag->name}}</a>
         @endforeach
 
-        <p class='w3-small w3-text-grey my-4'>Created or Updated {{$event->updated_at->diffForHumans()}}</p>
+        <p class='w3-small w3-text-grey my-4'>Created or Updated {{$post->updated_at->diffForHumans()}}</p>
       </div>
     </a>
 
